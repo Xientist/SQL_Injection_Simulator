@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Notre Newsletter</title>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <style>
+      html, body {
+      min-height: 100%;
+      }
+      body, div, form, input, select, p { 
+      padding: 0;
+      margin: 0;
+      outline: none;
+      font-family: Roboto, Arial, sans-serif;
+      font-size: 16px;
+      color: #eee;
+      }
+      body {
+      background: url("https://thiscatdoesnotexist.com/") repeat;
+      background-size: cover;
+      }
+      h1, h2 {
+      text-transform: uppercase;
+      font-weight: 400;
+      }
+      h2 {
+      margin: 0 0 0 8px;
+      }
+      .main-block {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      padding: 25px;
+      background: rgba(0, 0, 0, 0.5); 
+      }
+      .left-part, form {
+      padding: 25px;
+      }
+      .left-part {
+      text-align: center;
+      }
+      .fa-graduation-cap {
+      font-size: 72px;
+      }
+      form {
+      background: rgba(0, 0, 0, 0.7); 
+      }
+      .title {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      }
+      .info {
+      display: flex;
+      flex-direction: column;
+      }
+      input, select {
+      padding: 5px;
+      margin-bottom: 30px;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #eee;
+      }
+      input::placeholder {
+      color: #eee;
+      }
+      option:focus {
+      border: none;
+      }
+      option {
+      background: black; 
+      border: none;
+      }
+      .checkbox input {
+      margin: 0 10px 0 0;
+      vertical-align: middle;
+      }
+      .checkbox a {
+      color: #26a9e0;
+      }
+      .checkbox a:hover {
+      color: #85d6de;
+      }
+      .btn-item, button {
+      padding: 10px 5px;
+      margin-top: 20px;
+      border-radius: 5px; 
+      border: none;
+      background: #26a9e0; 
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 400;
+      color: #fff;
+      }
+      .btn-item {
+      display: inline-block;
+      margin: 20px 5px 0;
+      }
+      button {
+      width: 100%;
+      }
+      button:hover, .btn-item:hover {
+      background: #2579c0;
+      }
+      .btn-warning{
+      background: #CC7033;
+      }
+      .btn-warning:hover{
+      background: #EE5533;
+      }
+      @media (min-width: 568px) {
+      html, body {
+      height: 100%;
+      }
+      .main-block {
+      flex-direction: row;
+      height: calc(100% - 50px);
+      }
+      .left-part, form {
+      flex: 1;
+      height: auto;
+      }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="main-block">
+      <div class="left-part">
+        <i class="fas fa-graduation-cap"></i>
+        <h1>Bienvenue sur notre Newsletter</h1>
+        <p>Inscrivez vous pour recevoir les dernières astuces pour sécuriser vos sites web.</p>
+        <div class="btn-group">
+          <a class="btn-item" onClick="injection1()">Exemple d'injection</a>
+          <a class="btn-item" onClick="injection2()">Autre exemple</a>
+          <a class="btn-item" onClick="effacer()">Effacer</a>
+        </div>
+      </div>
+      <form method="post" action="./submit.php">
+        <div class="title">
+          <i class="fas fa-pencil-alt"></i> 
+          <h2>S'inscrire</h2>
+        </div>
+        <div class="info">
+          <input id="n" class="fname" type="text" name="name" placeholder="Prénom" required>
+          <input id="s" type="text" name="surname" placeholder="Nom" required>
+          <input id="e" type="text" name="email" placeholder="Email" required>
+          
+        </div>
+        <div class="checkbox">
+          <input type="checkbox" name="checkbox"><span>Envoyer un mail de confirmation.</span>
+        </div>
+        <div>
+            <button class="btn-warning" name="notsecure" type="submit">Confirmer (méthode non-sécurisée)</button>
+            <button name="secure" type="submit">Confirmer (méthode sécurisée)</button>
+        </div>
+      </form>
+    </div>
+  </body>
+  <script>
+      // cette requête crée un utilisateur à l'Email vide, ce qui est un jeu de données potentiellement illégal et pouvant provoquer des dysfonctionnement.
+      function injection1(){
+          document.getElementById("n").value="test";
+          document.getElementById("s").value="test";
+          document.getElementById("e").value="test'), ('', 'empty email user', '', '";
+      }
+      // cette requête va neutraliser les information de l'utilisateur ayant l'adresse choisie (ici "test@test.com") si il existe.
+      function injection2(){
+          document.getElementById("n").value="ok";
+          document.getElementById("s").value="ok";
+          document.getElementById("e").value="ok'), ('', 'destroy', 'user', 'test@test.com') ON DUPLICATE KEY UPDATE Id=Id, Name=0, Surname=0, Email=0; #";
+      }
+      function effacer(){
+          document.getElementById("n").value="";
+          document.getElementById("s").value="";
+          document.getElementById("e").value="";
+      }
+  </script>
+</html>
